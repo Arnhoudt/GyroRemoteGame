@@ -32,15 +32,44 @@
     let gameOver = false
     let gameEntities = []
     let startTimestamp //stores the timestamp (ms) when the game started
-    let previousCubeSpawned = -200000
+    let previousCubeSpawned = 2000 //the game starts with a 2 sec delay
+    let score = 0
+
+    const restart = ()=> {
+        gameOver = false
+        gameActive = true
+        previousCubeSpawned = 2000
+        score = 0
+        startTimestamp = Date.now()
+        document.querySelector("#message").classList.remove("fade_away")
+        document.querySelector("#message").classList.add("fade_in")
+        setTimeout(()=>{
+            document.querySelector("#message").classList.add("fade_away")
+            document.querySelector("#message").classList.remove("fade_in")
+        }, 2000)
+        document.querySelector("#score").textContent = "score: 0"
+        gameEntities = []
+    }
+
+    window.addEventListener('keypress', e => {
+        console.log(e)
+        if(e.key = 'r'){
+            restart()
+        }
+    })
+
+    const updateScore = score => {
+        document.querySelector("#score").textContent = "score: " + score
+    }
 
     const calibrateCenter = () =>{
         calibration.a = orientation.a,
         calibration.b = orientation.b
         document.querySelector("#canvas").classList.remove("hidden")
         document.querySelector("#calibration_menu").classList.add("hidden")
-        gameActive = true
-        startTimestamp = Date.now()
+        
+        document.querySelector("#HUD").classList.remove("hidden")
+        restart()
     }
 
     const executeFire = () =>{
@@ -51,6 +80,8 @@
                 (calibration.b - orientation.b) * y_multip + clientheight / 2 / devicePixelRatio,
             )){
                 obj.splice(index, 1);
+                score ++
+                updateScore(score)
             }
         })
     }

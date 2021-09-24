@@ -3,6 +3,8 @@
     const BACKGROUND_COLOR = "#241842"
     const POINTER_COLOR = "#FF5465"
     const SCORE_COLOR = "#00FF00"
+    const CUBE_SIZE = 60
+    const ARROW_RADIUS_SIZE = 15
 
     const socket = io.connect('/');
 
@@ -42,10 +44,13 @@
     }
 
     const executeFire = () =>{
-        console.log("executeFire")
-        gameEntities.forEach(gameEntity => {
-            if(gameEntity.isHit()){
-                console.log("remove entity")
+        gameEntities.forEach((gameEntity, index, obj) => {
+            if(gameEntity.isHit(
+                gameEntity,
+                (calibration.a - orientation.a) * x_multip + clientWidth / 2 / devicePixelRatio,
+                (calibration.b - orientation.b) * y_multip + clientheight / 2 / devicePixelRatio,
+            )){
+                obj.splice(index, 1);
             }
         })
     }
@@ -56,7 +61,7 @@
     }
 
     const differenceElapse360 = difference => {
-        if (Math.abs(difference) < 270)
+        if (Math.abs(difference) < 270) //90 deg margen of error
             return difference
         if (difference < 0)
             return 360 + difference
@@ -77,6 +82,13 @@
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
 
+    const cubeIsHit = (cube, x, y) => {
+        return x >= cube.pos[0] - ARROW_RADIUS_SIZE &&
+        x <= cube.pos[0] + CUBE_SIZE + ARROW_RADIUS_SIZE &&
+        y >= cube.pos[1] - ARROW_RADIUS_SIZE &&
+        y < cube.pos[1] + CUBE_SIZE + ARROW_RADIUS_SIZE
+    }
+
     const cubeCalculateState = (cube, time) => {
         cube.value = Math.round((cube.startTime + cube.activeTime - time)/100)/10
         return cube.value <= 0
@@ -92,7 +104,7 @@
     }
 
     const createCube = (startTime, activeTime) =>{
-        cube = {
+        return {
             startTime: startTime,
             activeTime: activeTime,
             value: activeTime/1000,
@@ -101,9 +113,9 @@
                 randomIntFromInterval(0, clientheight/devicePixelRatio - 60)
             ],
             calculateState: cubeCalculateState,
-            draw: cubeDraw
+            draw: cubeDraw,
+            isHit: cubeIsHit
         }
-        return cube
     }
 
     const run = () => { // wil execute every time the browser is able to update the screen
@@ -122,7 +134,7 @@
                     gameOver = true
                 }
             })
-            if(time > previousCubeSpawned + 5000){
+            if(time > previousCubeSpawned + (1000 - time/100)){
                 const cube = createCube(time, 10000)
                 gameEntities.push(cube)
                 previousCubeSpawned = time
@@ -133,7 +145,6 @@
     const draw = () => {
         ctx.fillStyle = BACKGROUND_COLOR
         ctx.fillRect(0,0, clientWidth, clientheight)
-        console.log(gameEntities)
         gameEntities.forEach(gameEntity => {
             gameEntity.draw(gameEntity, ctx)
         })

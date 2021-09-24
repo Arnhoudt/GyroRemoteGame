@@ -1,0 +1,35 @@
+<style>#fire{width: 100vw; height: 80vh;}</style>
+<h2 id="Orientation_a"></h2>
+<h2 id="Orientation_b"></h2>
+<button id="fire">FIRE</button>
+<script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+<script>
+  const socket = io.connect('/');
+  function handleOrientation(event) {
+    socket.emit('message', JSON.stringify({a: event.alpha, b: event.beta}))
+    updateFieldIfNotNull('Orientation_a', event.alpha);
+    updateFieldIfNotNull('Orientation_b', event.beta);
+  }
+
+  function updateFieldIfNotNull(fieldName, value, precision=10){
+    if (value != null)
+      document.getElementById(fieldName).innerHTML = value.toFixed(precision);
+  }
+
+  // Request permission for iOS 13+ devices
+  if (
+    DeviceMotionEvent &&
+    typeof DeviceMotionEvent.requestPermission === "function"
+  ) {
+    DeviceMotionEvent.requestPermission();
+  }
+  window.addEventListener("deviceorientation", handleOrientation);
+
+  const $fire = document.querySelector("#fire")
+  $fire.addEventListener('click', ()=>{
+    console.log("sending fire")
+    socket.emit('fire', 'fire')
+  })
+
+</script>
+

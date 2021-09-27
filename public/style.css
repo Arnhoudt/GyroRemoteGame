@@ -20,7 +20,7 @@ h2{
     font-size: 1.6rem;
 }
 
-#calibration_menu{
+.menu{
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -28,6 +28,27 @@ h2{
     top: 50%;
     left: 50%;                         
     transform: translate(-50%, -50%);   
+}
+
+.menu button{
+    background-color: transparent;
+    border: 1px solid white;
+    font-size: 1.6rem;
+    padding: 1rem 2rem;
+    color: white;
+}
+
+.menu input{
+    text-transform: uppercase;
+    font-size: 2rem;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    width: 10rem;
+}
+
+.menu p {
+    color: white;
 }
 
 #canvas{
@@ -90,7 +111,25 @@ h2{
     font-size: 1.6rem;
 }
 
+#fire{
+    width: 90%;
+    height: 90%;
+    background-color: transparent;
+    border: 1px solid #0ff;
+    color: #0ff;
+    margin: 5%;
+    padding: 0;
+    font-size: 3rem;
+}
 
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
 .hidden{
     display: none;

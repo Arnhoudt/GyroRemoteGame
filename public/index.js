@@ -8,6 +8,11 @@
 
     const socket = io.connect('/');
 
+    console.log(socket);
+    socket.on('connect', function() {
+        document.querySelector("#desktop_id").textContent = socket.id.substring(0,5).toUpperCase()
+    });
+
     // canvas setup
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -66,7 +71,7 @@
         calibration.a = orientation.a,
         calibration.b = orientation.b
         document.querySelector("#canvas").classList.remove("hidden")
-        document.querySelector("#calibration_menu").classList.add("hidden")
+        document.querySelector("#calibrate_menu").classList.add("hidden")
         
         document.querySelector("#HUD").classList.remove("hidden")
         restart()

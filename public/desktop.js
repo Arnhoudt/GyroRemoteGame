@@ -44,6 +44,10 @@
     let keyMap
 
     const init = () => {
+        document.querySelectorAll(".restart")
+        .forEach($element =>{$element.addEventListener("click", restart)})
+        document.querySelectorAll(".recalibrate")
+        .forEach($element =>{$element.addEventListener("click", recalibrate)})
         keyMap = {
             'r': restart,
             'c': recalibrate
@@ -60,6 +64,7 @@
     }
 
     const restart = ()=> {
+        showView(2)
         gameOver = false
         gameActive = true
         previousCubeSpawned = 2000
@@ -204,6 +209,8 @@
                 if(gameOverSignal){
                     gameActive = false
                     gameOver = true
+                    document.querySelector("#gameover_score").textContent = score
+                    showView(3)
                 }
             })
             if(time > previousCubeSpawned + (1000 - time/100)){

@@ -30,17 +30,24 @@
             <div id="score">score: 0</div>
             <div id="controlls">
                 <div>
-                    <button class="key_button">R</button>
+                    <button class="key_button restart">R</button>
                     <p>: restart</p>
                 </div>
                 <div>
-                    <button class="key_button">C</button>
+                    <button class="key_button recalibrate">C</button>
                     <p>: recalibrate</p>
                 </div>
             </div>
             <div id="sensitivity"></div>
         </div>
+        <div id="gameover" class="menu view view3">
+            <h2>Game Over</h2>
+            <p class="subtitle">You scored a total of: <span id="gameover_score">0</span> points</p>
+            <p class="subtitle">Do you want to try again?</p>
+            <button class="restart">restart</button>
+        </div>
         <canvas class="hidden view view2 view1" id="canvas"></canvas>
+        
     </main>
     <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
     <script src="desktop.js"></script>

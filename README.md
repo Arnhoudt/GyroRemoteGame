@@ -1,7 +1,7 @@
 # GyroRemoteGame
 A game to showcase the precision of your smartphone gyroscope
 
-#try live demo
+# try live demo
 https://gyroremotegame.antonkindt.be
 
 # installation

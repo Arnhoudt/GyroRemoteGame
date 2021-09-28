@@ -2,14 +2,13 @@
     //Settings
     const BACKGROUND_COLOR = "#241842"
     const POINTER_COLOR = "#FF5465"
-    const SCORE_COLOR = "#00FF00"
     const CUBE_SIZE = 60
     const ARROW_RADIUS_SIZE = 15
 
     const socket = io.connect('/');
 
     socket.on('connect', function() {
-        document.querySelector("#desktop_id").textContent = socket.id.replace(/[^\w]/gi, '').substring(0,1).toUpperCase()
+        document.querySelector("#desktop_id").textContent = socket.id.replace(/[^\w]/gi, '').substring(0,4).toUpperCase()
     });
 
     // canvas setup
@@ -231,15 +230,6 @@
         (calibration.b - orientation.b) * y_multip + clientheight / 2 / devicePixelRatio,
         15, 15, 0, 0, 2*Math.PI)
         ctx.stroke();
-    }
-
-    const fireGameloopInterrupt = () => {
-        gameLoopInterrupt = true
-    }
-
-    const continueGameLoop = () => {
-        gameLoopInterrupt = false
-        requestAnimationFrame(runWrapper)
     }
 
     const runWrapper = () => {

@@ -18,9 +18,7 @@ const port = process.env.PORT || 3000
 const io = require('socket.io')(server);
 let connectedSockets = {}
 
-
 app.use(express.static('./public'))
-
 
 
 io.on('connection', socket =>{
@@ -59,13 +57,13 @@ io.on('connection', socket =>{
     })
     socket.on('disconnect', message =>{
         try{
-            const id = socket.id.replace(/[^\w]/gi, '').substring(0, 1).toUpperCase()
+            const id = socket.id.replace(/[^\w]/gi, '').substring(0, 4).toUpperCase()
             delete connectedSockets[id]
         }catch (error){
             console.log(error)
         }
     })
-    const id = socket.id.replace(/[^\w]/gi, '').substring(0, 1).toUpperCase()
+    const id = socket.id.replace(/[^\w]/gi, '').substring(0, 4).toUpperCase()
     connectedSockets[id] = socket
 })
 

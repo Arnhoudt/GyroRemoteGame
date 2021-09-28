@@ -9,14 +9,21 @@
 </head>
 <body>
     <main>
-        <h1 class="hidden">Duckhunt</h1>
-        <div id="calibrate_menu" class="menu">
+        <h1 class="hidden">GyroRemoteGame</h1>
+        <div id="calibrate_menu" class="menu view view0">
             <h2>Calibration</h2>
             <p>desktop id: <span id="desktop_id"></span></p>
             <p class="subtitle">Point your phone at the center of the screen</p>
             <p class="instruction">[press Fire to continue]</p>
         </div>
-        <div id="HUD" class="hidden">
+        <div id="sensitivity_menu" class="menu view view1 hidden">
+            <h2>Sensitivity</h2>
+            <p class="subtitle">move the pointer and adjust the sensitivity to you liking</p>
+            <p id="sensitivity_label" class="subtitle">20</p>
+            <input value="20" id="sensitivity_range" type="range" min="5" max="100">
+            <p class="subtitle">press [Fire] to continue</p>
+        </div>
+        <div id="HUD" class="hidden view view2">
             <div id="message" class="fade_in">
                 <p>Shoot the squares before they reach 0</p>
             </div>
@@ -33,7 +40,7 @@
             </div>
             <div id="sensitivity"></div>
         </div>
-        <canvas class="hidden" id="canvas"></canvas>
+        <canvas class="hidden view view2 view1" id="canvas"></canvas>
     </main>
     <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
     <script src="desktop.js"></script>

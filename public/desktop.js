@@ -10,7 +10,7 @@
 
     console.log(socket);
     socket.on('connect', function() {
-        document.querySelector("#desktop_id").textContent = socket.id.substring(0,5).toUpperCase()
+        document.querySelector("#desktop_id").textContent = socket.id.replace(/[^\w]/gi, '').substring(0,1).toUpperCase()
     });
 
     // canvas setup
@@ -39,6 +39,25 @@
     let startTimestamp //stores the timestamp (ms) when the game started
     let previousCubeSpawned = 2000 //the game starts with a 2 sec delay
     let score = 0
+    let gameLoopInterrupt = false
+
+    let keyMap
+
+    const init = () => {
+        keyMap = {
+            'r': restart,
+            'c': recalibrate
+        }
+        window.addEventListener('keypress', e => {
+            if(e.key in keyMap){
+                keyMap[e.key]()
+            }
+        })
+        document.querySelector("#sensitivity_range").addEventListener('change',e=>{
+            document.querySelector("#sensitivity_label").textContent = y_multip = x_multip = e.target.value
+        })
+        requestAnimationFrame(runWrapper)
+    }
 
     const restart = ()=> {
         gameOver = false
@@ -48,6 +67,7 @@
         startTimestamp = Date.now()
         document.querySelector("#message").classList.remove("fade_away")
         document.querySelector("#message").classList.add("fade_in")
+        
         setTimeout(()=>{
             document.querySelector("#message").classList.add("fade_away")
             document.querySelector("#message").classList.remove("fade_in")
@@ -56,25 +76,40 @@
         gameEntities = []
     }
 
-    window.addEventListener('keypress', e => {
-        console.log(e)
-        if(e.key = 'r'){
-            restart()
-        }
-    })
+    const recalibrate = () => {
+        gameActive = false // stops new entities spawning while calibrating
+        gameEntities = [] // removes the background entities
+        showView(0)
+        fireIndex = 0
+    }
 
     const updateScore = score => {
         document.querySelector("#score").textContent = "score: " + score
     }
 
     const calibrateCenter = () =>{
-        calibration.a = orientation.a,
+        calibration.a = orientation.a
         calibration.b = orientation.b
-        document.querySelector("#canvas").classList.remove("hidden")
-        document.querySelector("#calibrate_menu").classList.add("hidden")
-        
-        document.querySelector("#HUD").classList.remove("hidden")
+        showView(1)
+    }
+
+    const calibrateSensitivity = () =>{
+        showView(2)
         restart()
+    }
+
+    const showView = index => {
+        document.querySelectorAll(".view").forEach($view =>{
+            console.log($view.classList)
+            if(!$view.classList.contains("hidden")){
+                $view.classList.add("hidden")
+            }
+        })
+        document.querySelectorAll(`.view${index}`).forEach($view =>{
+            if($view.classList.contains("hidden")){
+                $view.classList.remove("hidden")
+            }
+        })
     }
 
     const executeFire = () =>{
@@ -91,9 +126,10 @@
         })
     }
 
-    const fireMap = {//the fire map allows for a more accurate calibration
+    const fireMap = {//the fire map allows for a more accurate calibration in future implementation
         0:calibrateCenter,
-        1:executeFire,
+        1:calibrateSensitivity,
+        2:executeFire
     }
 
     const differenceElapse360 = difference => {
@@ -192,11 +228,21 @@
         ctx.stroke();
     }
 
+    const fireGameloopInterrupt = () => {
+        gameLoopInterrupt = true
+    }
+
+    const continueGameLoop = () => {
+        gameLoopInterrupt = false
+        requestAnimationFrame(runWrapper)
+    }
+
     const runWrapper = () => {
         run()
         draw()
-        requestAnimationFrame(runWrapper)
+        if(!gameLoopInterrupt)
+            requestAnimationFrame(runWrapper)
     }
-    requestAnimationFrame(runWrapper)
 
+    init()
 }

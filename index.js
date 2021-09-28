@@ -31,14 +31,18 @@ io.on('connection', socket =>{
         }
     })
     socket.on('fire', message => {
-        connectedSockets[re].emit('fire', message)
+        if(re in connectedSockets){
+            connectedSockets[re].emit('fire', message)
+        }else{
+            console.log("socket not found")
+        }
     })
-    socket.on('disconnect', socket =>{
-        delete connectedSockets[socket.id]
+    socket.on('disconnect', message =>{
+        const id = socket.id.replace(/[^\w]/gi, '').substring(0, 1).toUpperCase()
+        delete connectedSockets[id]
     })
-    console.log(socket.id.substring(0, 5))
-    connectedSockets[socket.id.substring(0, 5).toUpperCase()] = socket
-    // console.log(connectedSockets)
+    const id = socket.id.replace(/[^\w]/gi, '').substring(0, 1).toUpperCase()
+    connectedSockets[id] = socket
 })
 
 

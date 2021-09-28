@@ -8,34 +8,22 @@
     <title>GyroRemoteGame</title>
 </head>
 <body>
-    <main>
-        <h1 class="hidden">Duckhunt</h1>
-        <div id="calibrate_menu" class="menu">
-            <h2>Calibration</h2>
-            <p>desktop id: <span id="desktop_id"></span></p>
-            <p class="subtitle">Point your phone at the center of the screen</p>
-            <p class="instruction">[press Fire to continue]</p>
-        </div>
-        <div id="HUD" class="hidden">
-            <div id="message" class="fade_in">
-                <p>Shoot the squares before they reach 0</p>
-            </div>
-            <div id="score">score: 0</div>
-            <div id="controlls">
-                <div>
-                    <button class="key_button">R</button>
-                    <p>: restart</p>
-                </div>
-                <div>
-                    <button class="key_button">C</button>
-                    <p>: recalibrate</p>
-                </div>
-            </div>
-            <div id="sensitivity"></div>
-        </div>
-        <canvas class="hidden" id="canvas"></canvas>
-    </main>
-    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
-    <script src="index.js"></script>
+  <div id="connectToPc_menu" class="menu">
+    <h2>Who are you?</h2>
+    <p class="subtitle">In order to play the game you will need a phone and a computer (you can setup a phone as a computer but it will not give an optimal result)</p>
+    <p class="subtitle">This is a:</p>
+    <button id="thisIsAPhone_button">Phone</button>
+    <button id="thisIsAComputer_button">Computer</button>
+  </div>
+  <script>
+      $phoneButton = document.querySelector("#thisIsAPhone_button")
+      $computerButton = document.querySelector("#thisIsAComputer_button")
+      $phoneButton.addEventListener('click', ()=>{
+        window.location.replace("/mobile.html");
+      })
+      $computerButton.addEventListener('click', ()=>{
+        window.location.replace("/desktop.html");
+      })
+  </script>
 </body>
 </html>

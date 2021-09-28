@@ -8,7 +8,6 @@
 
     const socket = io.connect('/');
 
-    console.log(socket);
     socket.on('connect', function() {
         document.querySelector("#desktop_id").textContent = socket.id.replace(/[^\w]/gi, '').substring(0,1).toUpperCase()
     });
@@ -105,7 +104,6 @@
 
     const showView = index => {
         document.querySelectorAll(".view").forEach($view =>{
-            console.log($view.classList)
             if(!$view.classList.contains("hidden")){
                 $view.classList.add("hidden")
             }

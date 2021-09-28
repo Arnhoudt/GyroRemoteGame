@@ -137,6 +137,10 @@ h2{
     opacity: 1;
 }
 
+.menu .error{
+    color: #FF5465;
+}
+
 .unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

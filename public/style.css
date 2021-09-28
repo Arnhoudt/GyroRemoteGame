@@ -127,6 +127,16 @@ h2{
     font-size: 3rem;
 }
 
+#github_logo{
+    opacity: 0.3;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+}
+#github_logo:hover{
+    opacity: 1;
+}
+
 .unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

@@ -34,7 +34,6 @@ io.on('connection', socket =>{
         }
     })
     socket.on('message', message => {
-        console.log(message)
         try{
             re = JSON.parse(message)["re"].toUpperCase()
             if(re in connectedSockets){

@@ -1,11 +1,10 @@
-const isDevelopment = true
 const { Certificate } = require('crypto')
 const express = require('express')
 const app = express()
 const fs = require('fs')
 
 let options = {}
-if(isDevelopment || process.env.DEVELOPMENT){
+if(process.env.DEVELOPMENT){
     options = {
         key: fs.readFileSync('./localhost.key'),
         cert: fs.readFileSync('./localhost.crt')
@@ -13,7 +12,7 @@ if(isDevelopment || process.env.DEVELOPMENT){
 }
 
 
-const server = require(isDevelopment?'https':'http').Server(options, app)
+const server = require(process.env.DEVELOPMENT?'https':'http').Server(options, app)
 const port = process.env.PORT || 3000
 
 const io = require('socket.io')(server);

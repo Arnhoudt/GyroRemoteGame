@@ -154,3 +154,34 @@ h2{
 .hidden{
     display: none;
 }
+
+.qrCode{
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+}
+
+.qrCode>img{
+    width: 50%;
+}
+
+.qrCodePlaceholder{
+    width: 256px;
+    height: 256px;
+    background: #fff;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 2rem;
+}
+
+.qrCodePlaceholder>p{
+    color: #241842;
+}
+
+.hidden{
+    display: none;
+}

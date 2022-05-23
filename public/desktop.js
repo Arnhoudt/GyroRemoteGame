@@ -1,4 +1,4 @@
-{
+
     //Settings
     const BACKGROUND_COLOR = "#241842"
     const POINTER_COLOR = "#FF5465"
@@ -7,8 +7,24 @@
 
     const socket = io.connect('/');
 
+    let re = null;
+
     socket.on('connect', function() {
-        document.querySelector("#desktop_id").textContent = socket.id.replace(/[^\w]/gi, '').substring(0,4).toUpperCase()
+        re = socket.id.replace(/[^\w]/gi, '').substring(0,4).toUpperCase()
+        document.querySelector("#desktop_id").textContent = re
+        // var qrc = new QRCode(document.querySelector(".qrCode"), window.location.origin+"/mobile/"+socket.id.replace(/[^\w]/gi, '').substring(0,4).toUpperCase())
+        var qrc = new QRCode(document.querySelector(".qrCode"), {
+            text: "https://192.168.1.41:3000/mobile.html?code="+re,
+            width: 512,
+            height: 512,
+            colorDark : BACKGROUND_COLOR,
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        })
+        setTimeout(()=>{
+            document.querySelector(".qrCodePlaceholder").classList.add("hidden")
+            document.querySelector(".qrCode").classList.remove("hidden")
+        }, 10)
     });
 
     // canvas setup
@@ -62,6 +78,7 @@
     }
 
     const restart = ()=> {
+        socket.emit("restart", JSON.stringify({re: re}))
         showView(2)
         gameOver = false
         gameActive = true
@@ -206,6 +223,7 @@
                 if(gameOverSignal){
                     gameActive = false
                     gameOver = true
+                    socket.emit("gameover", JSON.stringify({re: re}))
                     document.querySelector("#gameover_score").textContent = score
                     showView(3)
                 }
@@ -240,4 +258,3 @@
     }
 
     init()
-}

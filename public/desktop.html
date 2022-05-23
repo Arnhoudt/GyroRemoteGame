@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>GyroRemoteGame</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
     <main>
@@ -13,6 +14,11 @@
         <div id="calibrate_menu" class="menu view view0">
             <h2>Calibration</h2>
             <p>desktop id: <span id="desktop_id"></span></p>
+            <div class="qrCodePlaceholder">
+                <p>Loading...</p>
+            </div>
+            <div class="qrCode hidden">
+            </div>
             <p class="subtitle">Point your phone at the center of the screen</p>
             <p class="instruction">[press Fire to continue]</p>
         </div>

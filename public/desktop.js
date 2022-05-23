@@ -12,8 +12,9 @@
     socket.on('connect', function() {
         re = socket.id.replace(/[^\w]/gi, '').substring(0,4).toUpperCase()
         document.querySelector("#desktop_id").textContent = re
-        // var qrc = new QRCode(document.querySelector(".qrCode"), window.location.origin+"/mobile/"+socket.id.replace(/[^\w]/gi, '').substring(0,4).toUpperCase())
-        var qrc = new QRCode(document.querySelector(".qrCode"), {
+        $qrCode = document.querySelector(".qrCode")
+        $qrCode.textContent = ""
+        var qrc = new QRCode($qrCode, {
             text: "https://192.168.1.41:3000/mobile.html?code="+re,
             width: 512,
             height: 512,

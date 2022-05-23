@@ -5,7 +5,7 @@ const app = express()
 const fs = require('fs')
 
 let options = {}
-if(isDevelopment){
+if(isDevelopment || process.env.DEVELOPMENT){
     options = {
         key: fs.readFileSync('./localhost.key'),
         cert: fs.readFileSync('./localhost.crt')

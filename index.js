@@ -13,7 +13,7 @@ if(process.env.DEVELOPMENT == "true"){
 }
 
 
-const server = require(process.env.DEVELOPMENT?'https':'http').Server(options, app)
+const server = require(process.env.DEVELOPMENT == "true"?'https':'http').Server(options, app)
 const port = process.env.PORT || 3000
 
 const io = require('socket.io')(server);
